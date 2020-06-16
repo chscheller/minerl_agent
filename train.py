@@ -29,14 +29,14 @@ flags.DEFINE_integer('bc_min_score', default=1, help='minimum score for demonstr
 flags.DEFINE_integer('bc_max_sequence_length', default=1000, help='sequence clipping length for demonstrations')
 flags.DEFINE_integer('bc_num_pipeline_workers', default=10, help='number of parallel workers for the preprocessing')
 flags.DEFINE_integer('bc_num_epochs', default=125, help='number of bc epochs')
-flags.DEFINE_integer('bc_batch_size', default=3, help='batch size')  # 15
+flags.DEFINE_integer('bc_batch_size', default=15, help='batch size')
 flags.DEFINE_float('bc_learning_rate', default=0.0005, help='Learning rate')
 flags.DEFINE_bool('bc_ignore_unimportant_actions', default=True, help='ignore unimportant actions during subsampling')
 
 # impala
 flags.DEFINE_bool('impala', default=True, help='impala')
 flags.DEFINE_integer('impala_num_actors', default=5, help='number of impala actors')
-flags.DEFINE_integer('impala_batch_size', default=16, help='batch size')  # 64
+flags.DEFINE_integer('impala_batch_size', default=64, help='batch size')
 flags.DEFINE_integer('impala_unroll_length', default=50, help='unroll length')
 flags.DEFINE_enum('impala_reward_clipping', default='default', enum_values=['abs_one', 'soft_asymmetric', 'default'],
                   help='reward clipping (default for no clipping)')
