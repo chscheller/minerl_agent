@@ -23,7 +23,6 @@ FLAGS = flags.FLAGS
 flags.DEFINE_bool('bc', default=True, help='behaviour cloning')
 flags.DEFINE_multi_string('bc_environments',
                           default=['MineRLObtainDiamond-v0', 'MineRLObtainIronPickaxe-v0', 'MineRLTreechop-v0'],
-                          # default=['MineRLTreechop-v0'],
                           help='bc environments')
 flags.DEFINE_integer('bc_min_score', default=1, help='minimum score for demonstrations to be considered')
 flags.DEFINE_integer('bc_max_sequence_length', default=1000, help='sequence clipping length for demonstrations')
@@ -70,7 +69,7 @@ MINERL_TRAINING_MAX_INSTANCES = int(os.getenv('MINERL_TRAINING_MAX_INSTANCES', 5
 MINERL_TRAINING_TIMEOUT = int(os.getenv('MINERL_TRAINING_TIMEOUT_MINUTES', 4 * 24 * 60))
 # The dataset is available in data/ directory from repository root.
 # MINERL_DATA_ROOT = os.getenv('MINERL_DATA_ROOT', 'data/')
-MINERL_DATA_ROOT = os.getenv('MINERL_DATA_ROOT', '/home/christian/source/MineRL/data')
+MINERL_DATA_ROOT = os.getenv('MINERL_DATA_ROOT', './data')
 
 # Optional: You can view best effort status of your instances with the help of parser.py
 # This will give you current state like number of steps completed, instances launched and so on. Make your you keep a

@@ -25,5 +25,5 @@ Download the [MineRL dataset](https://minerl.io/dataset/) to ``./data``.
 python run.py
 
 # Run local training and testing (headless)
-xvfb-run python run.py
+xvfb-run -a python run.py
 ```
