@@ -21,6 +21,10 @@ def clip_gradients(gradients, clip_grad_norm):
         return gradients, tf.global_norm(gradients)
 
 
+def compute_neg_log_probs(logits, actions):
+    return tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=actions)
+
+
 def compute_baseline_loss(advantages):
     # Loss for the baseline, summed over the time dimension.
     # Multiply by 0.5 to match the standard update rule:
@@ -89,8 +93,8 @@ def build_learner(agent: snt.RNNCore, agent_state, env_outputs, agent_outputs, r
     behaviour_logits_from_buffer = tf.nest.flatten(agent_outputs_from_buffer.action_logits)
     target_logits_from_buffer = tf.nest.flatten(learner_outputs_from_buffer.action_logits)
 
-    behaviour_neg_log_probs = sum(tf.nest.map_structure(vtrace.log_probs_from_logits_and_actions, behaviour_logits, actions))
-    target_neg_log_probs = sum(tf.nest.map_structure(vtrace.log_probs_from_logits_and_actions, target_logits, actions))
+    behaviour_neg_log_probs = sum(tf.nest.map_structure(compute_neg_log_probs, behaviour_logits, actions))
+    target_neg_log_probs = sum(tf.nest.map_structure(compute_neg_log_probs, target_logits, actions))
     entropy_loss = sum(tf.nest.map_structure(compute_entropy_loss, target_logits))
 
     with tf.device('/cpu'):
