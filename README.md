@@ -4,9 +4,7 @@ This repository contains the code of our third-placed submission to the [NeurIPS
 
 See our full paper for details: https://arxiv.org/abs/2003.06066.
 
-The IMPALA implementation is build upon https://github.com/deepmind/scalable_agent.
-
-# Run
+## Run
 
 Download the [MineRL dataset](https://minerl.io/dataset/) to ``./data``.
 
@@ -18,7 +16,11 @@ python run.py
 xvfb-run -a python run.py
 ```
 
-# Authors
+## Authors
 
-Yannick Schraner (yanick.schraner@gmail.com)<br />
-Christian Scheller (ch.scheller@hotmail.com)
+[Yanick Schraner](https://github.com/YanickSchraner/) and
+[Christian Scheller](https://github.com/metataro/)
+
+## Acknowledgement
+
+The IMPALA implementation is based on https://github.com/deepmind/scalable_agent.
