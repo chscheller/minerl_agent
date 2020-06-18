@@ -91,7 +91,7 @@ def build_learner(agent: snt.RNNCore, agent_state, env_outputs, agent_outputs, r
 
     behaviour_neg_log_probs = sum(tf.nest.map_structure(vtrace.log_probs_from_logits_and_actions, behaviour_logits, actions))
     target_neg_log_probs = sum(tf.nest.map_structure(vtrace.log_probs_from_logits_and_actions, target_logits, actions))
-    entropy = sum(tf.nest.map_structure(compute_entropy_loss, target_logits))
+    entropy_loss = sum(tf.nest.map_structure(compute_entropy_loss, target_logits))
 
     with tf.device('/cpu'):
         vtrace_returns = vtrace.from_importance_weights(
@@ -108,7 +108,7 @@ def build_learner(agent: snt.RNNCore, agent_state, env_outputs, agent_outputs, r
         advantages *= tf.where(advantages > 0.0, tf.ones_like(advantages), tf.zeros_like(advantages))
     policy_gradient_loss = tf.reduce_sum(target_neg_log_probs * tf.stop_gradient(vtrace_returns.pg_advantages))
     baseline_loss = .5 * tf.reduce_sum(tf.square(vtrace_returns.vs - learner_outputs.baseline))
-    entropy_loss = -tf.reduce_sum(entropy)
+    entropy_loss = tf.reduce_sum(entropy_loss)
 
     # Compute the CLEAR policy cloning loss and the value cloning as described in https://arxiv.org/abs/1811.11682:
     policy_cloning_loss = sum(tf.nest.map_structure(compute_policy_cloning_loss, target_logits_from_buffer,
