@@ -113,13 +113,10 @@ def main(log_dir, load_dir, observation_space: ObservationSpace, action_space: A
             dataset.make_from_tfrecors,
             dataset_path=dataset_path, name='train', observation_space=observation_space, action_space=action_space,
             min_score=FLAGS.bc_min_score, batch_size=FLAGS.bc_batch_size, num_epochs=FLAGS.bc_num_epochs)
-        learner_fn = functools.partial(
-            learner.build_learner,
-            learning_rate=FLAGS.bc_learning_rate, adam_beta1=0.9, adam_beta2=0.999, adam_epsilon=1e-8,
-            clip_grad_norm=100)
         behaviour_cloning.train(
-            log_dir=bc_log_dir, load_dir=load_dir, dataset_fn=dataset_fn, agent_fn=agent_fn, learner_fn=learner_fn,
-            seed=seed)
+            log_dir=bc_log_dir, load_dir=load_dir, dataset_fn=dataset_fn, agent_fn=agent_fn,
+            learning_rate=FLAGS.bc_learning_rate, adam_beta1=0.9, adam_beta2=0.999, adam_epsilon=1e-8,
+            clip_grad_norm=100, seed=seed)
 
         load_dir = bc_log_dir
 

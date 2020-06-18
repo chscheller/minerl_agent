@@ -74,7 +74,7 @@ def create_tfrecords_form_minerl_pipelines(data_pipelines: List[DataPipeline], d
     pathlib.Path(dataset_path).mkdir(parents=True, exist_ok=True)
     records, scores, episode_lengths = [], [], []
     step_mul_history = []
-    with multiprocessing.Pool(processes=1) as p:
+    with multiprocessing.Pool(processes=os.cpu_count()) as p:
         worker = functools.partial(_preprocess_function, dataset_path, name, observation_space, action_space,
                                    max_step_mul, max_sequence_length, ignore_unimportant_actions)
         for data in data_pipelines:

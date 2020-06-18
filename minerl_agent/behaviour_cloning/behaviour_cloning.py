@@ -1,12 +1,11 @@
 import logging
-import logging
 import os
 from typing import Callable, Tuple
 
 import tensorflow as tf
 
-import aicrowd_helper
 from minerl_agent.agent.agent import Agent
+from minerl_agent.behaviour_cloning.learner import build_learner
 
 logger = logging.getLogger(__name__)
 
@@ -15,7 +14,11 @@ def train(log_dir: str,
           load_dir: str,
           dataset_fn: Callable[[], Tuple[tf.data.Dataset, tuple, tuple, list]],
           agent_fn: Callable[[], Agent],
-          learner_fn: Callable[[Agent, tuple], tf.Operation],
+          learning_rate: float,
+          adam_beta1: float,
+          adam_beta2: float,
+          adam_epsilon: float,
+          clip_grad_norm: float,
           seed: int = 0):
     # tf session config
     filters = []
@@ -49,7 +52,9 @@ def train(log_dir: str,
         )
 
         with tf.device('/gpu'):
-            train_outputs = learner_fn(agent, learner_inputs)
+            train_outputs = build_learner(agent, learner_inputs,learning_rate=learning_rate, adam_beta1=adam_beta1,
+                                          adam_beta2=adam_beta2, adam_epsilon=adam_epsilon,
+                                          clip_grad_norm=clip_grad_norm)
 
         scaffold = None
 
