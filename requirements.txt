@@ -8,7 +8,7 @@ seaborn
 numpy==1.17.2
 opencv-python
 pyro4
-tensorflow-gpu==1.14.0
+tensorflow-gpu==2.5.1
 tensorflow-probability==0.7.0
 wrapt==1.11.1
 aicrowd-repo2docker==0.9.1
