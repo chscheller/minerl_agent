@@ -5,7 +5,7 @@ minerl==0.2.9
 coloredlogs
 matplotlib
 seaborn
-numpy==1.17.2
+numpy==1.22.0
 opencv-python
 pyro4
 tensorflow-gpu==1.14.0
